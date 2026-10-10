@@ -29,9 +29,9 @@ public class BlightShroom : MonoBehaviour
     void OnTriggerEnter2D(Collider2D collider)
     {
         Debug.Log("Collision Event");
-        if (collider.tag == "Ground")
+        if (collider.CompareTag("Wall"))
         {
-            Debug.Log("FUCKING COLLIDING!!!");
+            Debug.Log("COLLIDING!!!");
             magnitude *= -1;
         }
     }

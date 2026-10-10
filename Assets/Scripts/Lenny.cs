@@ -10,7 +10,9 @@ public class Lenny : MonoBehaviour
     public float speed = 650f;
     private float frameSinceJump = 0;
     public float maxJumpTime = 0.25f;
+    private int jumpCount = 0;
     private bool canJump = false;
+    private bool jumpKeyPressed = false;
     private bool climbingMode = false;
     private float climbingTimer = 0;
     public float climbingSpeed = 60f;
@@ -63,16 +65,25 @@ public class Lenny : MonoBehaviour
 
         if (climbingMode && isHittingWall)
         {
+            Debug.Log("Climbing...");
             canJump = true;
+            jumpCount = 0;
         }
 
 
         // If u are holding down the climb button, hitting a wall, haven't run out of a stamina, and trying to climb
-        if (climbingMode && isHittingWall && (climbingTimer < maxClimbingTime) && (ySpeed != 0))
+        if (climbingMode && isHittingWall && (climbingTimer < maxClimbingTime))
         {
             Debug.Log("Trying to climb...");
+            
+            if (ySpeed == 0)
+            {
+                climbingTimer += Time.deltaTime / 4;
+            } else
+            {
+                climbingTimer += Time.deltaTime;
+            }
 
-            climbingTimer += Time.deltaTime;
 
             rb.linearVelocity = new Vector2(xSpeed, ySpeed);
 
@@ -88,32 +99,46 @@ public class Lenny : MonoBehaviour
 
         xSpeed = Input.GetAxisRaw("Horizontal") * speed * Time.deltaTime;
 
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            jumpKeyPressed = true;
+        }
+
+        if (canJump && Input.GetKeyDown(KeyCode.Space))
+        {
+            Debug.Log("Jump Counter Incremented!");
+
+            jumpCount++;
+        }
+
         if (isHittingWall && !climbingMode && !isGrounded) xSpeed = 0;
 
-        if (isGrounded && Input.GetKey(KeyCode.Space))
+        if (canJump && Input.GetKey(KeyCode.Space))
         {
             float deltaJump = jumpPower * Time.deltaTime;
 
             rb.linearVelocity = new Vector2(xSpeed, deltaJump);
             frameSinceJump += Time.deltaTime;
 
+            Debug.Log(frameSinceJump);
+
             if (frameSinceJump > maxJumpTime)
             {
                 jumpPower = baseJumpPower;
                 frameSinceJump = 0;
-                canJump = false;
                 isGrounded = false;
+                canJump = false;
             }
         }
-        else if (isGrounded && Input.GetKeyUp(KeyCode.Space))
-        {
-            if (frameSinceJump > maxJumpTime)
-            {
-                jumpPower = baseJumpPower;
-                frameSinceJump = 0;
-                canJump = false;
-                isGrounded = false;
-            }
+        else if (canJump && Input.GetKeyUp(KeyCode.Space))
+        {   
+                
+              jumpPower = baseJumpPower;
+              frameSinceJump = 0;
+              canJump = false;
+              isGrounded = false;
+              jumpKeyPressed = false;
+
         }
         else
         {
@@ -123,6 +148,13 @@ public class Lenny : MonoBehaviour
             }
 
         }
+
+        if ((Input.GetKeyUp(KeyCode.Space) || !jumpKeyPressed) && !canJump && jumpCount < 2)
+        {
+            jumpKeyPressed = false;
+            canJump = true;
+        }
+        
     }
 
     void OnCollisionExit2D(Collision2D collision)
@@ -159,8 +191,13 @@ public class Lenny : MonoBehaviour
         if (collision.gameObject.transform.rotation.z < 90 && collision.gameObject.tag == "Ground")
         {
             isGrounded = true;
-            canJump = true;
+            Debug.Log("Hit ground");
+            if (!jumpKeyPressed)
+            {
+                canJump = true;
+            }
             climbingTimer = 0;
+            jumpCount = 0;
 
         }
 
@@ -171,7 +208,6 @@ public class Lenny : MonoBehaviour
     {
 
         float xSpeed = Input.GetAxisRaw("Horizontal") * speed * Time.deltaTime;
-
 
         handleMovement(xSpeed);
 

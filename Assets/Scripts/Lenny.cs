@@ -1,7 +1,15 @@
+using System.Collections.Generic;
+using System.Net.NetworkInformation;
 using Unity.VisualScripting;
 using UnityEngine;
-using System.Collections.Generic;
 using UnityEngine.Rendering;
+
+public enum GlidingStates
+{
+    NO_GLIDE,
+    PREPARING_GLIDE,
+    GLIDING
+}
 
 public class Lenny : MonoBehaviour
 {
@@ -14,13 +22,17 @@ public class Lenny : MonoBehaviour
     private bool canJump = false;
     private bool jumpKeyPressed = false;
     private bool climbingMode = false;
+    private bool jumping = false;
     private float climbingTimer = 0;
     public float climbingSpeed = 60f;
     private float maxClimbingTime = 10;
     private bool isGrounded = false;
     private bool isHittingWall = false;
-    public float baseJumpPower = 400f;
+    public float baseJumpPower = 300f;
     private float jumpPower;
+    private GlidingStates glideState = GlidingStates.NO_GLIDE;
+    private float glidingTimer = 0f;
+    public float glidingWait = 0.75f;
 
     private Dictionary<Collider2D, Vector2> lastNormals;
 
@@ -65,8 +77,10 @@ public class Lenny : MonoBehaviour
 
         if (climbingMode && isHittingWall)
         {
+            jumping = false;
             Debug.Log("Climbing...");
             canJump = true;
+            resetGlide();
             jumpCount = 0;
         }
 
@@ -102,20 +116,28 @@ public class Lenny : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             jumpKeyPressed = true;
+            // just in case
+            rb.gravityScale = 1f;
         }
 
         if (canJump && Input.GetKeyDown(KeyCode.Space))
         {
             Debug.Log("Jump Counter Incremented!");
 
+            jumping = true;
             jumpCount++;
+            resetGlide();
         }
 
         if (isHittingWall && !climbingMode && !isGrounded) xSpeed = 0;
 
         if (canJump && Input.GetKey(KeyCode.Space))
         {
+            Debug.Log($"Jump Counter {jumpCount}");
+
             float deltaJump = jumpPower * Time.deltaTime;
+
+            if (rb.gravityScale != 1) rb.gravityScale = 1;
 
             rb.linearVelocity = new Vector2(xSpeed, deltaJump);
             frameSinceJump += Time.deltaTime;
@@ -128,16 +150,20 @@ public class Lenny : MonoBehaviour
                 frameSinceJump = 0;
                 isGrounded = false;
                 canJump = false;
+                glideState = GlidingStates.PREPARING_GLIDE;
             }
         }
         else if (canJump && Input.GetKeyUp(KeyCode.Space))
-        {   
-                
-              jumpPower = baseJumpPower;
-              frameSinceJump = 0;
-              canJump = false;
-              isGrounded = false;
-              jumpKeyPressed = false;
+        {
+
+                Debug.Log($"Jump Counter {jumpCount}");
+            
+                frameSinceJump = 0;
+                canJump = false;
+                isGrounded = false;
+                jumpKeyPressed = false;
+
+                resetGlide();
 
         }
         else
@@ -148,6 +174,8 @@ public class Lenny : MonoBehaviour
             }
 
         }
+
+
 
         if ((Input.GetKeyUp(KeyCode.Space) || !jumpKeyPressed) && !canJump && jumpCount < 2)
         {
@@ -170,6 +198,7 @@ public class Lenny : MonoBehaviour
                 Debug.Log("Leaving wall");
                 return;
             }
+
         }
     }
 
@@ -199,8 +228,46 @@ public class Lenny : MonoBehaviour
             climbingTimer = 0;
             jumpCount = 0;
 
+            jumping = false;
+
+            resetGlide();
+
         }
 
+    }
+
+    public void resetGlide()
+    {
+        glideState = GlidingStates.NO_GLIDE;
+        glidingTimer = 0;
+        rb.gravityScale = 1;
+
+    }
+
+    void handleGliding()
+    {
+
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+            resetGlide();
+        }
+
+        if (glideState == GlidingStates.PREPARING_GLIDE)
+        {
+            glidingTimer += Time.deltaTime;
+
+            if (glidingTimer > glidingWait)
+            {
+                Debug.Log("Gliding!");
+                glideState = GlidingStates.GLIDING;
+                glidingTimer = 0;
+
+                canJump = false;
+                jumpCount++;
+
+                rb.gravityScale = 0.1f;
+            }
+        }
     }
 
     // Update is called once per frame
@@ -211,7 +278,17 @@ public class Lenny : MonoBehaviour
 
         handleMovement(xSpeed);
 
-        if(xSpeed < 0)
+        // Sometimes, velocity can be 0 in practice, but not the number stored in memory
+        if (rb.linearVelocityY < 0 && !(Utilities.approxEqual(rb.linearVelocityY, 0, 1e-5f) && !jumping && glideState == GlidingStates.NO_GLIDE))
+        {
+            if (jumpCount < 1) jumpCount = 1;
+            jumping = true;
+            glideState = GlidingStates.PREPARING_GLIDE;
+        }
+
+        handleGliding();
+
+        if (xSpeed < 0)
         {
             this.transform.rotation = new Quaternion(0, -1, 0, 0);
         }

@@ -285,12 +285,6 @@ public class Lenny : MonoBehaviour
 
         }
         
-        if (collision.gameObject.CompareTag("Deathzone"))
-        {
-            Debug.Log("Player fell");
-            gameObject.transform.position = lastGroundPosition;
-        }
-
     }
 
     public void resetGlide()

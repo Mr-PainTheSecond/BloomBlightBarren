@@ -10,6 +10,7 @@ public class Lenny : MonoBehaviour
     private int frameSinceJump = 0;
     public int maxJumpFrames = 60;
     private bool isGrounded = false;
+    private bool isHittingWall = false;
     public float baseJumpPower = 350f;
     private float jumpPower;
 
@@ -23,15 +24,24 @@ public class Lenny : MonoBehaviour
         rb.bodyType = RigidbodyType2D.Dynamic;
     }
 
-    void handleJump()
+    void handleJump(float xSpeed)
     {
-        float xSpeed = Input.GetAxisRaw("Horizontal") * speed * Time.deltaTime;
-        float ySpeed = -9.81f;
 
-        if (isGrounded && Input.GetKey(KeyCode.Space))
+        if (Input.GetKeyUp(KeyCode.Space))
         {
+            jumpPower = baseJumpPower;
+            frameSinceJump = 0;
+            isGrounded = false;
+        }
+
+        if (isHittingWall) xSpeed = 0;
+
+        else if (isGrounded && Input.GetKey(KeyCode.Space))
+        {
+            Debug.Log("Here!");
             float deltaJump = jumpPower * Time.deltaTime;
 
+            jumpPower /= 1.01f;
             rb.linearVelocity = new Vector2(xSpeed, deltaJump);
             frameSinceJump++;
 
@@ -51,15 +61,40 @@ public class Lenny : MonoBehaviour
     void OnCollisionEnter2D(Collision2D collision)
     {
 
+        Vector2 normalVector = collision.GetContact(0).normal;
+
+        // Collided from the side, don't ground player
+        if (Vector2.Dot(normalVector, Vector2.left) > 0.7f || Vector2.Dot(normalVector, Vector2.right) > 0.7f)
+        {
+            transform.position.Set(transform.position.x - speed, transform.position.y, transform.position.z);
+            isHittingWall = true;
+            return;
+        }
+
+        isHittingWall = false;
+
         if (collision.gameObject.transform.rotation.z < 90 && collision.gameObject.tag == "Ground")
         {
             isGrounded = true;
         }
+
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        handleJump();
+        float xSpeed = Input.GetAxisRaw("Horizontal") * speed * Time.deltaTime;
+
+        handleJump(xSpeed);
+
+        if(xSpeed < 0)
+        {
+            this.transform.rotation = new Quaternion(0, -1, 0, 0);
+        }
+        else
+        {
+            this.transform.rotation = new Quaternion(0, 0, 0, 0);
+        }
     }
 }

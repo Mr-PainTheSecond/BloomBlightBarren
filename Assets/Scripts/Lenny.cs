@@ -78,6 +78,7 @@ public class Lenny : MonoBehaviour
         if (climbingMode && isHittingWall)
         {
             jumping = false;
+            jumping = false;
             Debug.Log("Climbing...");
             canJump = true;
             resetGlide();

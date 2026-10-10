@@ -183,4 +183,5 @@ MonoBehaviour:
   speed: 400
   maxJumpTime: 0.25
   climbingSpeed: 120
-  baseJumpPower: 400
+  baseJumpPower: 300
+  glidingWait: 0.75

@@ -6,12 +6,12 @@ public class Lenny : MonoBehaviour
 {
 
     private Rigidbody2D rb;
-    public float speed = 200f;
+    public float speed = 650f;
     private int frameSinceJump = 0;
     public int maxJumpFrames = 60;
     private bool isGrounded = false;
     private bool isHittingWall = false;
-    public float baseJumpPower = 350f;
+    public float baseJumpPower = 400f;
     private float jumpPower;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created

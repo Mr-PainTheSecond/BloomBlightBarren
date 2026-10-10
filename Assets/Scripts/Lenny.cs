@@ -251,7 +251,7 @@ public class Lenny : MonoBehaviour
 
         }
     }
-
+    
 
     void OnCollisionEnter2D(Collision2D collision)
     {
@@ -283,6 +283,12 @@ public class Lenny : MonoBehaviour
 
             resetGlide();
 
+        }
+        
+        if (collision.gameObject.CompareTag("Deathzone"))
+        {
+            Debug.Log("Player fell");
+            gameObject.transform.position = lastGroundPosition;
         }
 
     }

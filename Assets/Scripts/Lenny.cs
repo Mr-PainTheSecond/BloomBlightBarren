@@ -50,6 +50,7 @@ public class Lenny : MonoBehaviour
     public BoxCollider2D upAttack;
     public BoxCollider2D downAttack;
     public BoxCollider2D[] attacks;
+    public float attackTimer = 0;
     public BoxCollider2D activeColliders = null;
 
     public Direction direction;
@@ -152,6 +153,12 @@ public class Lenny : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            if (activeColliders != null)
+            {
+                activeColliders.enabled = false;
+                activeColliders = null;
+                attackTimer = 0;
+            }
             jumpKeyPressed = true;
             // just in case
             rb.gravityScale = 1f;
@@ -323,15 +330,24 @@ public class Lenny : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            if (activeColliders == null && direction != Direction.DOWN || canDownAttack())
+            if ((direction != Direction.DOWN || canDownAttack()) && activeColliders == null)
             {
                 attacks[(int)direction].enabled = true;
             }
 
             activeColliders = attacks[(int)direction];
             Debug.Log("Enabling attack!");
-        }
+        } else if (activeColliders != null)
+        {
+            attackTimer += Time.deltaTime;
 
+            if (attackTimer > glidingTimer)
+            {
+                activeColliders.enabled = false;
+                activeColliders = null;
+                attackTimer = 0;
+            }
+        }
 
     }
 

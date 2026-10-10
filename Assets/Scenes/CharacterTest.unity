@@ -452,7 +452,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4c8c81d0f9a331f4ca84e4fcee17de34, type: 3}
---- !u!1001 &1346734669
+--- !u!61 &1596006965 stripped
+BoxCollider2D:
+  m_CorrespondingSourceObject: {fileID: 1090686308537852357, guid: a6ff9fd50f525dd44b17ca59f9a03d32, type: 3}
+  m_PrefabInstance: {fileID: 1740528524}
+  m_PrefabAsset: {fileID: 0}
+--- !u!61 &1596006966 stripped
+BoxCollider2D:
+  m_CorrespondingSourceObject: {fileID: 8528231233762677328, guid: a6ff9fd50f525dd44b17ca59f9a03d32, type: 3}
+  m_PrefabInstance: {fileID: 1740528524}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1740528524
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -460,21 +470,25 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3236108843095354226, guid: a6ff9fd50f525dd44b17ca59f9a03d32, type: 3}
-      propertyPath: glidingWait
-      value: 0.75
+    - target: {fileID: 1090686308537852357, guid: a6ff9fd50f525dd44b17ca59f9a03d32, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3236108843095354226, guid: a6ff9fd50f525dd44b17ca59f9a03d32, type: 3}
-      propertyPath: baseJumpPower
-      value: 300
-      objectReference: {fileID: 0}
+      propertyPath: upAttack
+      value: 
+      objectReference: {fileID: 1596006966}
+    - target: {fileID: 3236108843095354226, guid: a6ff9fd50f525dd44b17ca59f9a03d32, type: 3}
+      propertyPath: downAttack
+      value: 
+      objectReference: {fileID: 1596006965}
     - target: {fileID: 4136269183892285952, guid: a6ff9fd50f525dd44b17ca59f9a03d32, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.27
+      value: 4.54
       objectReference: {fileID: 0}
     - target: {fileID: 4136269183892285952, guid: a6ff9fd50f525dd44b17ca59f9a03d32, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.86
+      value: 6.43
       objectReference: {fileID: 0}
     - target: {fileID: 4136269183892285952, guid: a6ff9fd50f525dd44b17ca59f9a03d32, type: 3}
       propertyPath: m_LocalPosition.z
@@ -593,5 +607,5 @@ SceneRoots:
   - {fileID: 961739753}
   - {fileID: 203844589}
   - {fileID: 1983657815}
-  - {fileID: 1346734669}
   - {fileID: 1330889999}
+  - {fileID: 1740528524}

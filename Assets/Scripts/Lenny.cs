@@ -11,6 +11,14 @@ public enum GlidingStates
     GLIDING
 }
 
+public enum Direction
+{
+    LEFT,
+    RIGHT,
+    UP,
+    DOWN
+}
+
 public class Lenny : MonoBehaviour
 {
 
@@ -36,6 +44,13 @@ public class Lenny : MonoBehaviour
 
     private Dictionary<Collider2D, Vector2> lastNormals;
 
+    public BoxCollider2D leftAttack;
+    public BoxCollider2D rightAttack;
+    public BoxCollider2D upAttack;
+    public BoxCollider2D downAttack;
+    private BoxCollider2D[] attacks;
+
+    Direction direction;
 
 
     void Cache(Collision2D collision)
@@ -55,6 +70,20 @@ public class Lenny : MonoBehaviour
         jumpPower = baseJumpPower;
 
         rb.bodyType = RigidbodyType2D.Dynamic;
+
+        leftAttack.enabled = false;
+        rightAttack.enabled = false;
+        upAttack.enabled = false;
+        downAttack.enabled = false;
+
+        direction = Direction.RIGHT;
+
+        attacks = new BoxCollider2D[4];
+
+        attacks[(int)Direction.LEFT] = leftAttack;
+        attacks[(int)Direction.RIGHT] = rightAttack;
+        attacks[(int)Direction.UP] = upAttack;
+        attacks[(int)Direction.DOWN] = downAttack;
 
         lastNormals = new Dictionary<Collider2D, Vector2>();
     }
@@ -87,10 +116,10 @@ public class Lenny : MonoBehaviour
 
 
         // If u are holding down the climb button, hitting a wall, haven't run out of a stamina, and trying to climb
-        if (climbingMode && isHittingWall && (climbingTimer < maxClimbingTime))
+        if (canClimb())
         {
             Debug.Log("Trying to climb...");
-            
+
             if (ySpeed == 0)
             {
                 climbingTimer += Time.deltaTime / 4;
@@ -107,6 +136,11 @@ public class Lenny : MonoBehaviour
         {
             return false;
         }
+    }
+
+    public bool canClimb()
+    {
+        return climbingMode && isHittingWall && (climbingTimer < maxClimbingTime);
     }
 
     void handleMovement(float xSpeed)
@@ -157,14 +191,14 @@ public class Lenny : MonoBehaviour
         else if (canJump && Input.GetKeyUp(KeyCode.Space))
         {
 
-                Debug.Log($"Jump Counter {jumpCount}");
-            
-                frameSinceJump = 0;
-                canJump = false;
-                isGrounded = false;
-                jumpKeyPressed = false;
+            Debug.Log($"Jump Counter {jumpCount}");
 
-                resetGlide();
+            frameSinceJump = 0;
+            canJump = false;
+            isGrounded = false;
+            jumpKeyPressed = false;
+
+            resetGlide();
 
         }
         else
@@ -183,7 +217,7 @@ public class Lenny : MonoBehaviour
             jumpKeyPressed = false;
             canJump = true;
         }
-        
+
     }
 
     void OnCollisionExit2D(Collision2D collision)
@@ -202,6 +236,7 @@ public class Lenny : MonoBehaviour
 
         }
     }
+
 
     void OnCollisionEnter2D(Collision2D collision)
     {
@@ -245,7 +280,7 @@ public class Lenny : MonoBehaviour
 
     }
 
-    void handleGliding()
+    void handleGliding(float xSpeed)
     {
 
         if (Input.GetKeyUp(KeyCode.Space))
@@ -271,13 +306,56 @@ public class Lenny : MonoBehaviour
         }
     }
 
+    bool canDownAttack()
+    {
+        return jumping || (canClimb());
+    }
+
+    void handleAttacks()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (direction != Direction.DOWN || canDownAttack())
+            {
+                attacks[(int)direction].enabled = true;
+            }
+            Debug.Log("Enabling attack!");
+        }
+    }
+
+    void getDirection(float x, float y)
+    {
+        // Since up/down is rarer than left/right, they take attack priority
+       if (y > 0)
+       {
+            direction = Direction.UP;
+       } else if (y < 0)
+       {
+            direction = Direction.DOWN;
+       }
+       else if (x > 0)
+       {
+            direction = Direction.RIGHT;
+       } else if (x < 0)
+       {
+            direction = Direction.LEFT;
+       }
+       else
+       {
+            direction = Direction.RIGHT;
+       }
+    }
+
     // Update is called once per frame
     void Update()
     {
 
         float xSpeed = Input.GetAxisRaw("Horizontal") * speed * Time.deltaTime;
+        float ySpeed = Input.GetAxisRaw("Vertical");
 
         handleMovement(xSpeed);
+
+        getDirection(xSpeed, ySpeed);
 
         // Sometimes, velocity can be 0 in practice, but not the number stored in memory
         if (rb.linearVelocityY < 0 && !(Utilities.approxEqual(rb.linearVelocityY, 0, 1e-5f) && !jumping && glideState == GlidingStates.NO_GLIDE))
@@ -287,7 +365,9 @@ public class Lenny : MonoBehaviour
             glideState = GlidingStates.PREPARING_GLIDE;
         }
 
-        handleGliding();
+        handleGliding(xSpeed);
+
+        handleAttacks();
 
         if (xSpeed < 0)
         {

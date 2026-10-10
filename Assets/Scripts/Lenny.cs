@@ -48,9 +48,9 @@ public class Lenny : MonoBehaviour
     public BoxCollider2D rightAttack;
     public BoxCollider2D upAttack;
     public BoxCollider2D downAttack;
-    private BoxCollider2D[] attacks;
+    public BoxCollider2D[] attacks;
 
-    Direction direction;
+    public Direction direction;
 
 
     void Cache(Collision2D collision)

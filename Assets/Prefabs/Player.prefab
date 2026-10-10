@@ -191,8 +191,10 @@ MonoBehaviour:
   glidingWait: 0.75
   leftAttack: {fileID: 6964789312494908534}
   rightAttack: {fileID: 6556230699251179793}
-  upAttack: {fileID: 0}
-  downAttack: {fileID: 0}
+  upAttack: {fileID: 8528231233762677328}
+  downAttack: {fileID: 1090686308537852357}
+  attacks: []
+  direction: 0
 --- !u!61 &6271147391542991129
 BoxCollider2D:
   m_ObjectHideFlags: 0

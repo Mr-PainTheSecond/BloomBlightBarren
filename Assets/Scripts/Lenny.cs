@@ -41,6 +41,7 @@ public class Lenny : MonoBehaviour
     private GlidingStates glideState = GlidingStates.NO_GLIDE;
     private float glidingTimer = 0f;
     public float glidingWait = 0.75f;
+    public Vector2 lastGroundPosition;
 
     private Dictionary<Collider2D, Vector2> lastNormals;
 
@@ -49,6 +50,7 @@ public class Lenny : MonoBehaviour
     public BoxCollider2D upAttack;
     public BoxCollider2D downAttack;
     public BoxCollider2D[] attacks;
+    public BoxCollider2D activeColliders = null;
 
     public Direction direction;
 
@@ -234,6 +236,12 @@ public class Lenny : MonoBehaviour
                 return;
             }
 
+            else if (Vector2.Dot(normalVector, Vector2.up) > 0.7f)
+            {
+                Debug.Log("Leaving floor");
+                lastGroundPosition = gameObject.transform.position;
+            }
+
         }
     }
 
@@ -315,12 +323,16 @@ public class Lenny : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            if (direction != Direction.DOWN || canDownAttack())
+            if (activeColliders == null && direction != Direction.DOWN || canDownAttack())
             {
                 attacks[(int)direction].enabled = true;
             }
+
+            activeColliders = attacks[(int)direction];
             Debug.Log("Enabling attack!");
         }
+
+
     }
 
     void getDirection(float x, float y)

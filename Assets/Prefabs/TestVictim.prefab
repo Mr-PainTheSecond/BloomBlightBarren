@@ -14,9 +14,10 @@ GameObject:
   - component: {fileID: 6148924318504005306}
   - component: {fileID: 990841620948489925}
   - component: {fileID: 4612037247097763764}
+  - component: {fileID: 7156771659957033373}
   m_Layer: 0
   m_Name: TestVictim
-  m_TagString: Enemies
+  m_TagString: FlipTrigger
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -85,7 +86,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -971380471989021944, guid: a0cbc4264f673cf4fb4b1be0a2f1ec8f, type: 3}
+  m_Sprite: {fileID: -1122249647, guid: a0cbc4264f673cf4fb4b1be0a2f1ec8f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -130,17 +131,17 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.020663649, y: 0.0075567216}
+  m_Offset: {x: -0.0015973598, y: -0.007408172}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.6875, y: 0.65625}
+    oldSize: {x: 0.625, y: 0.59375}
     newSize: {x: 0.83, y: 0.2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.7868485, y: 0.6231786}
+  m_Size: {x: 0.64018774, y: 0.5932488}
   m_EdgeRadius: 0
 --- !u!114 &6148924318504005306
 MonoBehaviour:
@@ -203,3 +204,16 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &7156771659957033373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3371421435697870398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfda4c81b6ca6fb4c865789aa7c03a93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BlightShroom
+  speed: 200

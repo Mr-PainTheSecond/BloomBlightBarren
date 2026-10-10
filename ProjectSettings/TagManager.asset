@@ -8,6 +8,7 @@ TagManager:
   - Enemies
   - Lenny
   - Deathzone
+  - FlipTrigger
   layers:
   - Default
   - TransparentFX

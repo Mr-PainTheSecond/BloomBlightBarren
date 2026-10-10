@@ -121,67 +121,67 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: enemy1-Sheet_0
+      name: enemy1blight-Sheet_0
       rect:
         serializedVersion: 2
-        x: 5
-        y: 7
-        width: 22
-        height: 21
+        x: 6
+        y: 8
+        width: 20
+        height: 19
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 803d7597b96f482f0800000000000000
-      internalID: -971380471989021944
+      spriteID: 6c1cbd70a7f67e04c9127eb59419a7a3
+      internalID: -1122249647
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: enemy1-Sheet_1
+      name: enemy1blight-Sheet_1
       rect:
         serializedVersion: 2
-        x: 37
-        y: 7
-        width: 22
-        height: 22
+        x: 38
+        y: 8
+        width: 20
+        height: 20
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: d582bb36ac2ef0f40800000000000000
-      internalID: 5697021412531447901
+      spriteID: 1e30fd3ab722f3446926800cbe00e323
+      internalID: -240871549
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: enemy1-Sheet_2
+      name: enemy1blight-Sheet_2
       rect:
         serializedVersion: 2
-        x: 68
-        y: 7
-        width: 22
-        height: 22
+        x: 69
+        y: 8
+        width: 20
+        height: 20
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 8622754cdaf106d40800000000000000
-      internalID: 5575491169868522088
+      spriteID: 2911ffe9daa190a4db80541aa51c9830
+      internalID: 1661629108
       vertices: []
       indices: 
       edges: []
@@ -190,7 +190,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: e79d43cf1e6b8eb40a25ccf2a42833a5
     internalID: 0
     vertices: []
     indices: 
@@ -198,11 +198,13 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      enemy1-Sheet_0: -971380471989021944
-      enemy1-Sheet_1: 5697021412531447901
-      enemy1-Sheet_2: 5575491169868522088
+      enemy1blight-Sheet_0: -1122249647
+      enemy1blight-Sheet_1: -240871549
+      enemy1blight-Sheet_2: 1661629108
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

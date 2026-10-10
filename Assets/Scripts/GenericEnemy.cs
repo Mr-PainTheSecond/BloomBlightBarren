@@ -1,8 +1,10 @@
+using Unity.Jobs;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class GenericEnemy : MonoBehaviour
 {
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -16,6 +18,7 @@ public class GenericEnemy : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
     }
 
     // Update is called once per frame

@@ -72,7 +72,7 @@ public class Lenny : MonoBehaviour
 
     public LennyChangeSprite lcSprite;
     
-    public int spriteCd = 1;
+    public Animator anim;
 
     void Cache(Collision2D collision)
     {
@@ -114,7 +114,8 @@ public class Lenny : MonoBehaviour
         fireTimers = new float [3] { 0, 0.5f, 1.5f};
         
         lcSprite = GetComponent<LennyChangeSprite>();
-
+        
+        anim = GetComponent<Animator>();
    
 }
 
@@ -125,18 +126,6 @@ public class Lenny : MonoBehaviour
             Debug.Log("Enterig Climb Mode!");
             Debug.Log($"{isHittingWall}");
             climbingMode = true;
-
-            if (spriteCd == 1)
-            {
-                lcSprite.ChangeSprite(lcSprite.climb1);
-                spriteCd++;
-            }
-            
-            if (spriteCd == 2)
-            {
-                lcSprite.ChangeSprite(lcSprite.climb2);
-                spriteCd--;
-            }
         }
 
         else if (Input.GetKeyUp(KeyCode.LeftShift))
@@ -268,20 +257,22 @@ public class Lenny : MonoBehaviour
             jumpKeyPressed = false;
             canJump = true;
         }
-
+/*
         if (xSpeed != 0)
         {
-            lcSprite.ChangeSprite(lcSprite.walk1);
+            lcSprite.cycle = true;
+            //lcSprite.ChangeSprite(lcSprite.walk1);
             lcSprite.CycleSprites(lcSprite.walk1, lcSprite.walk2);
         }
-        else if (xSpeed == 0 && !canJump && jumpCount < 2)
+        else if (xSpeed == 0 && !canJump)
         {
             lcSprite.ReturnSprite();
             lcSprite.cycle = false;
         }
+        */    
             
-            
-            
+    if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D))
+        anim.SetTrigger("isMove");
         
 
     }

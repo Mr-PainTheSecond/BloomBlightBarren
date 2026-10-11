@@ -19,7 +19,7 @@ public class LennyChangeSprite : MonoBehaviour
         atkDown,
         breathFire;
     
-    public float cycleSpeed = 0.001f;
+    public float cycleSpeed = 1f;
     public bool cycle = true;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -41,8 +41,6 @@ public class LennyChangeSprite : MonoBehaviour
     public void CycleSprites(Sprite s1, Sprite s2)
     {
         SpriteRenderer sprite1 = GetComponent<SpriteRenderer>();
-        sprite.sprite = s1;
-        sprite1.sprite = s2;
         StartCoroutine((CycleSpritesT(s1, s2, sprite1)));
     }
     
@@ -53,6 +51,9 @@ public class LennyChangeSprite : MonoBehaviour
         while (cycle)
         {
             yield return waitForSeconds;
+            sprite.sprite = s1;
+            sr.sprite = s2;
+            
             sprite.enabled = !sprite.enabled;
             sr.enabled = !sr.enabled;
         }

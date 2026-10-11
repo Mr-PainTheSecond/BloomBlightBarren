@@ -188,13 +188,20 @@ MonoBehaviour:
   maxJumpTime: 0.25
   climbingSpeed: 220
   baseJumpPower: 300
+  fireOffset: 10
   glidingWait: 0.75
+  lastGroundPosition: {x: 0, y: 0}
+  fireObj: {fileID: 8946191938687994836, guid: 8e334533d0560b94593308f7cc3d9c2d, type: 3}
   leftAttack: {fileID: 6964789312494908534}
   rightAttack: {fileID: 6556230699251179793}
   upAttack: {fileID: 8528231233762677328}
   downAttack: {fileID: 1090686308537852357}
   attacks: []
+  attackTimer: 0
+  activeColliders: {fileID: 0}
+  fireStage: 0
   direction: 0
+  fireTimers: []
 --- !u!61 &6271147391542991129
 BoxCollider2D:
   m_ObjectHideFlags: 0

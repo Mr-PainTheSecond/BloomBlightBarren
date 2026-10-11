@@ -19,6 +19,13 @@ public enum Direction
     DOWN
 }
 
+public enum FireStages
+{
+    REGULAR,
+    PREPARING_FIRE,
+    DRAWING_FIRE
+}
+
 public class Lenny : MonoBehaviour
 {
 
@@ -37,11 +44,14 @@ public class Lenny : MonoBehaviour
     private bool isGrounded = false;
     private bool isHittingWall = false;
     public float baseJumpPower = 300f;
+    public float fireOffset = 200f;
     private float jumpPower;
     private GlidingStates glideState = GlidingStates.NO_GLIDE;
     private float glidingTimer = 0f;
     public float glidingWait = 0.75f;
     public Vector2 lastGroundPosition;
+    public GameObject fireObj;
+    private GameObject activeFire;
 
     private Dictionary<Collider2D, Vector2> lastNormals;
 
@@ -53,8 +63,12 @@ public class Lenny : MonoBehaviour
     public float attackTimer = 0;
     public BoxCollider2D activeColliders = null;
 
+    public FireStages fireStage = FireStages.REGULAR;
     public Direction direction;
+    public Direction facingDirection;
 
+    private float currentFireTimer = 0;
+    public float[] fireTimers;
 
     void Cache(Collision2D collision)
     {
@@ -79,6 +93,7 @@ public class Lenny : MonoBehaviour
         upAttack.enabled = false;
         downAttack.enabled = false;
 
+        facingDirection = Direction.RIGHT;
         direction = Direction.RIGHT;
 
         attacks = new BoxCollider2D[4];
@@ -89,6 +104,8 @@ public class Lenny : MonoBehaviour
         attacks[(int)Direction.DOWN] = downAttack;
 
         lastNormals = new Dictionary<Collider2D, Vector2>();
+
+        fireTimers = new float [3] { 0, 0.5f, 1.5f};
     }
 
     bool handleClimb(float xSpeed)
@@ -162,6 +179,12 @@ public class Lenny : MonoBehaviour
             jumpKeyPressed = true;
             // just in case
             rb.gravityScale = 1f;
+        }
+
+        if (fireStage != FireStages.REGULAR)
+        {
+            rb.linearVelocity = new Vector2(0, rb.linearVelocityY);
+            return;
         }
 
         if (canJump && Input.GetKeyDown(KeyCode.Space))
@@ -349,10 +372,61 @@ public class Lenny : MonoBehaviour
             }
         }
 
+        if (Input.GetKeyDown(KeyCode.Q) && isGrounded && fireStage == FireStages.REGULAR)
+        {
+            if (activeColliders != null)
+            {
+                activeColliders.enabled = false;
+                activeColliders = null;
+            }
+            attackTimer = 0;
+
+            fireStage++;
+        }
+
+        if (fireStage == FireStages.PREPARING_FIRE)
+        {
+            currentFireTimer += Time.deltaTime;
+
+            if (currentFireTimer >= fireTimers[(int)fireStage])
+            {
+                float localFireOffset = fireOffset;
+                int rotationVariance = 0;
+
+                if (direction == Direction.LEFT)
+                {
+                    localFireOffset = -fireOffset;
+                    rotationVariance = 1;
+                }
+
+                Debug.Log("Finished preparing the fire");
+                fireStage = FireStages.DRAWING_FIRE;
+                activeFire = Instantiate(fireObj, new Vector3(transform.position.x + localFireOffset, transform.position.y, transform.position.z), new Quaternion(0, 0, rotationVariance, 0));
+                currentFireTimer = 0;
+            }
+        }
+        else if (fireStage == FireStages.DRAWING_FIRE)
+        {
+            currentFireTimer += Time.deltaTime;
+
+            if (currentFireTimer >= fireTimers[(int)fireStage])
+            {
+                Destroy(activeFire);
+                currentFireTimer = 0;
+                activeFire = null;
+                fireStage = FireStages.REGULAR;
+            }
+        }
+
+
     }
 
     void getDirection(float x, float y)
     {
+        if (fireStage == FireStages.DRAWING_FIRE)
+        {
+            return;
+        }
         // Since up/down is rarer than left/right, they take attack priority
        if (y > 0)
        {
@@ -364,13 +438,15 @@ public class Lenny : MonoBehaviour
        else if (x > 0)
        {
             direction = Direction.RIGHT;
+            facingDirection = Direction.RIGHT;
        } else if (x < 0)
        {
             direction = Direction.LEFT;
+            facingDirection = Direction.LEFT;
        }
        else
        {
-            direction = Direction.RIGHT;
+            direction = facingDirection;
        }
     }
 
@@ -397,7 +473,7 @@ public class Lenny : MonoBehaviour
 
         handleAttacks();
 
-        if (xSpeed < 0)
+        if (facingDirection == Direction.LEFT)
         {
             this.transform.rotation = new Quaternion(0, -1, 0, 0);
         }

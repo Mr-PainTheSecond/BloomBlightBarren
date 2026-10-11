@@ -6012,9 +6012,12 @@ GameObject:
   - component: {fileID: 698995226}
   - component: {fileID: 698995225}
   - component: {fileID: 698995224}
+  - component: {fileID: 698995230}
+  - component: {fileID: 698995229}
+  - component: {fileID: 698995228}
   m_Layer: 0
   m_Name: Enemy2
-  m_TagString: Untagged
+  m_TagString: Enemies
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6156,12 +6159,66 @@ Transform:
   m_GameObject: {fileID: 698995223}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 318.0096, y: -34.95587, z: 0}
+  m_LocalPosition: {x: 318.0096, y: -32.27, z: 0}
   m_LocalScale: {x: 2.7041, y: 2.7041, z: 2.7041}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &698995228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 698995223}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d04988ce05e6e2b4081bc377eb01d797, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BlightFly
+  speed: 200
+--- !u!114 &698995229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 698995223}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2a79809c2170c244aee183858c687f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GenericEnemy
+  HP: 1
+  spawn: {fileID: 0}
+--- !u!50 &698995230
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 698995223}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1001 &716017985
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6557,6 +6614,10 @@ PrefabInstance:
     - target: {fileID: 3371421435697870398, guid: 14b2dab561160334995ff5d07138a7b7, type: 3}
       propertyPath: m_Name
       value: TestVictim (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6148924318504005306, guid: 14b2dab561160334995ff5d07138a7b7, type: 3}
+      propertyPath: HP
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8964197518719431717, guid: 14b2dab561160334995ff5d07138a7b7, type: 3}
       propertyPath: m_LocalPosition.x

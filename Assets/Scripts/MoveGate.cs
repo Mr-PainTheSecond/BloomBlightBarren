@@ -1,16 +1,24 @@
+using System;
 using UnityEngine;
 
 public class MoveGate : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public GameObject Lgate, Rgate;
+
+    private void Start()
     {
-        
+        Lgate.SetActive(false);
+        Rgate.SetActive(false);
     }
 
-    // Update is called once per frame
-    void Update()
+    void OnTriggerExit2D(Collider2D other)
     {
-        
+        if (other.gameObject.CompareTag("Player"))
+        {
+            Debug.Log("PLayer Passed gate");
+            Lgate.SetActive(true);
+            Rgate.SetActive(true);
+            
+        }
     }
 }

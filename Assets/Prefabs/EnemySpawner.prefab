@@ -46,8 +46,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpawnEnemy
   enemy: {fileID: 3371421435697870398, guid: 14b2dab561160334995ff5d07138a7b7, type: 3}
   enemyCnt: 0
-  enemyMax: 0
-  minX: 0
-  maxX: 0
-  minY: 0
-  maxY: 0
+  enemyMax: 5
+  minX: 147.3
+  maxX: 192.5
+  minY: -1.4
+  maxY: 12.5

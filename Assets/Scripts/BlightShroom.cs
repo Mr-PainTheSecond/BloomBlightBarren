@@ -20,7 +20,7 @@ public class BlightShroom : MonoBehaviour
             if (Vector2.Dot(normalVector, Vector2.left) > 0.7f || Vector2.Dot(normalVector, Vector2.right) > 0.7f)
             {
 
-                Debug.Log("Wall Hit!");
+                //Debug.Log("Wall Hit!");
                 magnitude *= -1;
             }
         }
@@ -28,10 +28,10 @@ public class BlightShroom : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collider)
     {
-        Debug.Log("Collision Event");
+        //Debug.Log("Collision Event");
         if (collider.CompareTag("Wall"))
         {
-            Debug.Log("COLLIDING!!!");
+            //Debug.Log("COLLIDING!!!");
             magnitude *= -1;
         }
     }

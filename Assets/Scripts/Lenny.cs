@@ -95,8 +95,8 @@ public class Lenny : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
-            Debug.Log("Enterig Climb Mode!");
-            Debug.Log($"{isHittingWall}");
+            //Debug.Log("Enterig Climb Mode!");
+            //Debug.Log($"{isHittingWall}");
             climbingMode = true;
         }
 
@@ -111,7 +111,7 @@ public class Lenny : MonoBehaviour
         {
             jumping = false;
             jumping = false;
-            Debug.Log("Climbing...");
+            //Debug.Log("Climbing...");
             canJump = true;
             resetGlide();
             jumpCount = 0;
@@ -121,7 +121,7 @@ public class Lenny : MonoBehaviour
         // If u are holding down the climb button, hitting a wall, haven't run out of a stamina, and trying to climb
         if (canClimb())
         {
-            Debug.Log("Trying to climb...");
+            //Debug.Log("Trying to climb...");
 
             if (ySpeed == 0)
             {
@@ -166,7 +166,7 @@ public class Lenny : MonoBehaviour
 
         if (canJump && Input.GetKeyDown(KeyCode.Space))
         {
-            Debug.Log("Jump Counter Incremented!");
+            //Debug.Log("Jump Counter Incremented!");
 
             jumping = true;
             jumpCount++;
@@ -177,7 +177,7 @@ public class Lenny : MonoBehaviour
 
         if (canJump && Input.GetKey(KeyCode.Space))
         {
-            Debug.Log($"Jump Counter {jumpCount}");
+            //Debug.Log($"Jump Counter {jumpCount}");
 
             float deltaJump = jumpPower * Time.deltaTime;
 
@@ -186,7 +186,7 @@ public class Lenny : MonoBehaviour
             rb.linearVelocity = new Vector2(xSpeed, deltaJump);
             frameSinceJump += Time.deltaTime;
 
-            Debug.Log(frameSinceJump);
+            //Debug.Log(frameSinceJump);
 
             if (frameSinceJump > maxJumpTime)
             {
@@ -200,7 +200,7 @@ public class Lenny : MonoBehaviour
         else if (canJump && Input.GetKeyUp(KeyCode.Space))
         {
 
-            Debug.Log($"Jump Counter {jumpCount}");
+            //Debug.Log($"Jump Counter {jumpCount}");
 
             frameSinceJump = 0;
             canJump = false;
@@ -239,13 +239,13 @@ public class Lenny : MonoBehaviour
             if ((Vector2.Dot(normalVector, Vector2.left) > 0.7f || Vector2.Dot(normalVector, Vector2.right) > 0.7f))
             {
                 isHittingWall = false;
-                Debug.Log("Leaving wall");
+                //Debug.Log("Leaving wall");
                 return;
             }
 
             else if (Vector2.Dot(normalVector, Vector2.up) > 0.7f)
             {
-                Debug.Log("Leaving floor");
+                //Debug.Log("Leaving floor");
                 lastGroundPosition = gameObject.transform.position;
             }
 
@@ -264,14 +264,14 @@ public class Lenny : MonoBehaviour
         if ((Vector2.Dot(normalVector, Vector2.left) > 0.7f || Vector2.Dot(normalVector, Vector2.right) > 0.7f))
         {
             isHittingWall = true;
-            Debug.Log("Is Hitting Wall");
+            //Debug.Log("Is Hitting Wall");
             return;
         }
 
         if (collision.gameObject.transform.rotation.z < 90 && collision.gameObject.tag == "Ground")
         {
             isGrounded = true;
-            Debug.Log("Hit ground");
+            //Debug.Log("Hit ground");
             if (!jumpKeyPressed)
             {
                 canJump = true;
@@ -309,7 +309,7 @@ public class Lenny : MonoBehaviour
 
             if (glidingTimer > glidingWait)
             {
-                Debug.Log("Gliding!");
+                //Debug.Log("Gliding!");
                 glideState = GlidingStates.GLIDING;
                 glidingTimer = 0;
 
@@ -336,7 +336,7 @@ public class Lenny : MonoBehaviour
             }
 
             activeColliders = attacks[(int)direction];
-            Debug.Log("Enabling attack!");
+            //Debug.Log("Enabling attack!");
         } else if (activeColliders != null)
         {
             attackTimer += Time.deltaTime;

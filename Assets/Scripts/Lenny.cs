@@ -167,9 +167,6 @@ public class Lenny : MonoBehaviour
 
     void handleMovement(float xSpeed)
     {
-
-        xSpeed = Input.GetAxisRaw("Horizontal") * speed * Time.deltaTime;
-
         if (Input.GetKeyDown(KeyCode.Space))
         {
             if (activeColliders != null)

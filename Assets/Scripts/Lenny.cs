@@ -70,6 +70,10 @@ public class Lenny : MonoBehaviour
     private float currentFireTimer = 0;
     public float[] fireTimers;
 
+    public LennyChangeSprite lcSprite;
+    
+    public int spriteCd = 1;
+
     void Cache(Collision2D collision)
     {
         if (collision.contactCount > 0)
@@ -108,7 +112,11 @@ public class Lenny : MonoBehaviour
         lastNormals = new Dictionary<Collider2D, Vector2>();
 
         fireTimers = new float [3] { 0, 0.5f, 1.5f};
-    }
+        
+        lcSprite = GetComponent<LennyChangeSprite>();
+
+   
+}
 
     bool handleClimb(float xSpeed)
     {
@@ -117,6 +125,18 @@ public class Lenny : MonoBehaviour
             Debug.Log("Enterig Climb Mode!");
             Debug.Log($"{isHittingWall}");
             climbingMode = true;
+
+            if (spriteCd == 1)
+            {
+                lcSprite.ChangeSprite(lcSprite.climb1);
+                spriteCd++;
+            }
+            
+            if (spriteCd == 2)
+            {
+                lcSprite.ChangeSprite(lcSprite.climb2);
+                spriteCd--;
+            }
         }
 
         else if (Input.GetKeyUp(KeyCode.LeftShift))
@@ -135,7 +155,7 @@ public class Lenny : MonoBehaviour
             jumpCount = 0;
         }
 
-
+        lcSprite.ReturnSprite();
         // If u are holding down the climb button, hitting a wall, haven't run out of a stamina, and trying to climb
         if (canClimb())
         {
@@ -217,6 +237,8 @@ public class Lenny : MonoBehaviour
                 canJump = false;
                 if (glideState != GlidingStates.GLIDING) glideState = GlidingStates.PREPARING_GLIDE;
             }
+            
+            lcSprite.ChangeSprite(lcSprite.jump);
         }
         else if (canJump && Input.GetKeyUp(KeyCode.Space))
         {
@@ -238,15 +260,29 @@ public class Lenny : MonoBehaviour
                 rb.linearVelocity = new Vector2(xSpeed, rb.linearVelocity.y);
             }
 
+
         }
-
-
 
         if ((Input.GetKeyUp(KeyCode.Space) || !jumpKeyPressed) && !canJump && jumpCount < 2)
         {
             jumpKeyPressed = false;
             canJump = true;
         }
+
+        if (xSpeed != 0)
+        {
+            lcSprite.ChangeSprite(lcSprite.walk1);
+            lcSprite.CycleSprites(lcSprite.walk1, lcSprite.walk2);
+        }
+        else if (xSpeed == 0 && !canJump && jumpCount < 2)
+        {
+            lcSprite.ReturnSprite();
+            lcSprite.cycle = false;
+        }
+            
+            
+            
+        
 
     }
 
@@ -291,6 +327,7 @@ public class Lenny : MonoBehaviour
 
         if (collision.gameObject.transform.rotation.z < 90 && collision.gameObject.tag == "Ground")
         {
+            lcSprite.ReturnSprite();
             rb.linearVelocityY = 0;
             isGrounded = true;
             Debug.Log("Hit ground");
@@ -369,8 +406,10 @@ public class Lenny : MonoBehaviour
                 attacks[(int)attackingDirection].enabled = true;
                 activeColliders = attacks[(int)attackingDirection];
                 Debug.Log("Enabling attack!");
+                lcSprite.ChangeSprite(lcSprite.atkFront);
             }
 
+           
         } else if (activeColliders != null)
         {
             attackTimer += Time.deltaTime;
@@ -380,6 +419,7 @@ public class Lenny : MonoBehaviour
                 activeColliders.enabled = false;
                 activeColliders = null;
                 attackTimer = 0;
+                lcSprite.ReturnSprite();
             }
         }
 
@@ -414,6 +454,7 @@ public class Lenny : MonoBehaviour
                 fireStage = FireStages.DRAWING_FIRE;
                 activeFire = Instantiate(fireObj, new Vector3(transform.position.x + localFireOffset, transform.position.y, transform.position.z), new Quaternion(0, 0, rotationVariance, 0));
                 currentFireTimer = 0;
+                lcSprite.ChangeSprite(lcSprite.breathFire);
             }
         }
         else if (fireStage == FireStages.DRAWING_FIRE)
@@ -426,6 +467,8 @@ public class Lenny : MonoBehaviour
                 currentFireTimer = 0;
                 activeFire = null;
                 fireStage = FireStages.REGULAR;
+                
+                lcSprite.ReturnSprite();
             }
         }
 

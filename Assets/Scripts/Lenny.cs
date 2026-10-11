@@ -128,8 +128,11 @@ public class Lenny : MonoBehaviour
         
         lcSprite = GetComponent<LennyChangeSprite>();
 
+        Debug.Log(lcSprite);
    
-}
+    }
+
+    
 
     bool handleClimb(float xSpeed)
     {

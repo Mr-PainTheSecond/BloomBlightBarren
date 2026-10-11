@@ -29,11 +29,13 @@ public class LennyChangeSprite : MonoBehaviour
 
     public void ChangeSprite(Sprite newSprite)
     {
+        Debug.Log("REND");
         sprite.sprite = newSprite;
     }
 
     public void ReturnSprite()
     {
+        Debug.Log("bruh");
         sprite.sprite = idle;
     }
 

@@ -1,15 +1,18 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SpawnEnemy : MonoBehaviour
 {
-    public GameObject enemy; // add other later
+    [SerializeField] private GameObject enemy; // add other later
     public int enemyCnt = 0;
     public int enemyMax = 0;
     
     public float minX, maxX, minY, maxY;
+
+    public bool isSpawn = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
-    {
+    { 
         
     }
 
@@ -18,15 +21,24 @@ public class SpawnEnemy : MonoBehaviour
     {
         if (enemyCnt < enemyMax)
             SpawnsEnemy();
+
+        for (int i = 0; i < enemyMax; i++)
+        {
+            if (enemy.IsDestroyed())
+                enemyCnt = 0;
+        }
     }
 
     void SpawnsEnemy()
     {
-        float x = Random.Range(minX, maxX);
-        float y = Random.Range(minY, maxY);
+        if (isSpawn)
+        {
+            float x = Random.Range(minX, maxX);
+            float y = Random.Range(minY, maxY);
         
-        Vector2 pos = new Vector2(x, y);
-        Instantiate(enemy, pos, Quaternion.identity);
-        enemyCnt++;
+            Vector2 pos = new Vector2(x, y);
+            Instantiate(enemy, pos, Quaternion.identity);
+            enemyCnt++;
+        }
     }
 }

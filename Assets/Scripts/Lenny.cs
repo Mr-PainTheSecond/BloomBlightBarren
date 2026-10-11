@@ -463,7 +463,7 @@ public class Lenny : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
 
         float xSpeed = Input.GetAxisRaw("Horizontal") * speed * Time.deltaTime;

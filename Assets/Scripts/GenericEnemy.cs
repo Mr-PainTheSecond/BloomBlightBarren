@@ -39,7 +39,7 @@ public class GenericEnemy : MonoBehaviour
             HP -= fireDamage;
         }
         
-        if (HP < 0)
+        if (HP <= 0)
         {
             Destroy(gameObject);
         }

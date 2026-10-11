@@ -129,7 +129,6 @@ public class Lenny : MonoBehaviour
         if (climbingMode && isHittingWall)
         {
             jumping = false;
-            jumping = false;
             Debug.Log("Climbing...");
             canJump = true;
             resetGlide();
@@ -336,7 +335,7 @@ public class Lenny : MonoBehaviour
                 glideState = GlidingStates.GLIDING;
                 glidingTimer = 0;
 
-                canJump = false;
+                if(!isGrounded) canJump = false;
                 jumpCount++;
 
                 rb.gravityScale = 0.1f;

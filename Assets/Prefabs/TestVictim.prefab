@@ -88,7 +88,7 @@ SpriteRenderer:
   m_MaskInteraction: 0
   m_Sprite: {fileID: -1122249647, guid: a0cbc4264f673cf4fb4b1be0a2f1ec8f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 0.83, y: 0.2}
@@ -156,6 +156,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   HP: 1
+  spawn: {fileID: 0}
 --- !u!50 &990841620948489925
 Rigidbody2D:
   serializedVersion: 5
@@ -193,7 +194,7 @@ Animator:
   m_GameObject: {fileID: 3371421435697870398}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 77bbc6fa5cc3e9d44baa7fba0d8516a3, type: 2}
+  m_Controller: {fileID: 9100000, guid: 26ff85347e4cfd54391391a1323824af, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

@@ -295,6 +295,7 @@ public class Lenny : MonoBehaviour
 
         if (collision.gameObject.transform.rotation.z < 90 && collision.gameObject.tag == "Ground")
         {
+            rb.linearVelocityY = 0;
             isGrounded = true;
             Debug.Log("Hit ground");
             if (!jumpKeyPressed)
@@ -485,7 +486,7 @@ public class Lenny : MonoBehaviour
 
         else if (rb.linearVelocityY == 0)
         {
-            Debug.Log("No linear Y Velocity");
+            //Debug.Log("No linear Y Velocity");
             resetGlide();
         }
 

@@ -189,6 +189,7 @@ MonoBehaviour:
   climbingSpeed: 220
   baseJumpPower: 300
   fireOffset: 10
+  glideState: 0
   glidingWait: 0.75
   lastGroundPosition: {x: 0, y: 0}
   fireObj: {fileID: 8946191938687994836, guid: 8e334533d0560b94593308f7cc3d9c2d, type: 3}

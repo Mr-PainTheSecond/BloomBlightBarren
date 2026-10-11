@@ -681,7 +681,7 @@ MonoBehaviour:
   maxJumpTime: 0.25
   climbingSpeed: 220
   baseJumpPower: 300
-  fireOffset: 10
+  fireOffset: 5
   glideState: 0
   glidingWait: 0.75
   lastGroundPosition: {x: 0, y: 0}

@@ -402,17 +402,20 @@ public class Lenny : MonoBehaviour
             if (currentFireTimer >= fireTimers[(int)fireStage])
             {
                 float localFireOffset = fireOffset;
-                int rotationVariance = 0;
+                float rotationVariance = 90;
 
                 if (direction == Direction.LEFT)
                 {
                     localFireOffset = -fireOffset;
-                    rotationVariance = 1;
+                    rotationVariance = 270;
                 }
 
                 Debug.Log("Finished preparing the fire");
                 fireStage = FireStages.DRAWING_FIRE;
-                activeFire = Instantiate(fireObj, new Vector3(transform.position.x + localFireOffset, transform.position.y, transform.position.z), new Quaternion(0, 0, rotationVariance, 0));
+                activeFire = Instantiate(fireObj, new Vector3(transform.position.x + localFireOffset, transform.position.y, transform.position.z), new Quaternion(0, 0, 0, 0));
+
+                activeFire.transform.rotation = Quaternion.Euler(new Vector3(0, 0, rotationVariance));
+
                 currentFireTimer = 0;
             }
         }

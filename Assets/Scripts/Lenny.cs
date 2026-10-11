@@ -46,7 +46,7 @@ public class Lenny : MonoBehaviour
     public float baseJumpPower = 300f;
     public float fireOffset = 200f;
     private float jumpPower;
-    private GlidingStates glideState = GlidingStates.NO_GLIDE;
+    public GlidingStates glideState = GlidingStates.NO_GLIDE;
     private float glidingTimer = 0f;
     public float glidingWait = 0.75f;
     public Vector2 lastGroundPosition;
@@ -93,8 +93,10 @@ public class Lenny : MonoBehaviour
         upAttack.enabled = false;
         downAttack.enabled = false;
 
+
         facingDirection = Direction.RIGHT;
         direction = Direction.RIGHT;
+        rb.freezeRotation = true;
 
         attacks = new BoxCollider2D[4];
 
@@ -353,13 +355,25 @@ public class Lenny : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            if ((direction != Direction.DOWN || canDownAttack()) && activeColliders == null)
+            Direction attackingDirection;
+            if (direction == Direction.UP || direction == Direction.DOWN)
             {
-                attacks[(int)direction].enabled = true;
+                attackingDirection = direction;
+            }
+            else
+            {
+                Debug.Log("From Facing Direction!");
+                attackingDirection = facingDirection;
             }
 
-            activeColliders = attacks[(int)direction];
-            Debug.Log("Enabling attack!");
+            if ((attackingDirection != Direction.DOWN || canDownAttack()) && activeColliders == null)
+            {
+                
+                attacks[(int)attackingDirection].enabled = true;
+                activeColliders = attacks[(int)attackingDirection];
+                Debug.Log("Enabling attack!");
+            }
+
         } else if (activeColliders != null)
         {
             attackTimer += Time.deltaTime;

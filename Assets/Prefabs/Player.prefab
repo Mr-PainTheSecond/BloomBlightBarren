@@ -189,6 +189,7 @@ MonoBehaviour:
   climbingSpeed: 220
   baseJumpPower: 300
   fireOffset: 10
+  glideState: 0
   glidingWait: 0.75
   lastGroundPosition: {x: 0, y: 0}
   fireObj: {fileID: 8946191938687994836, guid: 8e334533d0560b94593308f7cc3d9c2d, type: 3}
@@ -201,6 +202,7 @@ MonoBehaviour:
   activeColliders: {fileID: 0}
   fireStage: 0
   direction: 0
+  facingDirection: 0
   fireTimers: []
 --- !u!61 &6271147391542991129
 BoxCollider2D:

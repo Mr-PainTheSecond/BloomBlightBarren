@@ -109,3 +109,5 @@ InitTestScene*.unity*
 *_ignore*
 
 *.env
+
+.idea/

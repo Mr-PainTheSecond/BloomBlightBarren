@@ -219,7 +219,7 @@ public class Lenny : MonoBehaviour
                 frameSinceJump = 0;
                 isGrounded = false;
                 canJump = false;
-                glideState = GlidingStates.PREPARING_GLIDE;
+                if (glideState != GlidingStates.GLIDING) glideState = GlidingStates.PREPARING_GLIDE;
             }
         }
         else if (canJump && Input.GetKeyUp(KeyCode.Space))
@@ -480,7 +480,13 @@ public class Lenny : MonoBehaviour
         {
             if (jumpCount < 1) jumpCount = 1;
             jumping = true;
-            glideState = GlidingStates.PREPARING_GLIDE;
+            //glideState = GlidingStates.PREPARING_GLIDE;
+        }
+
+        else if (rb.linearVelocityY == 0)
+        {
+            Debug.Log("No linear Y Velocity");
+            resetGlide();
         }
 
         handleGliding(xSpeed);

@@ -41,7 +41,7 @@ public class GenericEnemy : MonoBehaviour
         
         if (HP <= 0)
         {
-            spawn.enemiesKilled++;
+            if(spawn != null) spawn.enemiesKilled++;
             Destroy(gameObject);
         }
 

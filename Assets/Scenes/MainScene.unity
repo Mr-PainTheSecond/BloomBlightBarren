@@ -3958,7 +3958,7 @@ MonoBehaviour:
     CustomLookAtTarget: 0
   Lens:
     FieldOfView: 60
-    OrthographicSize: 4.8
+    OrthographicSize: 7.41
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -3985,7 +3985,7 @@ Transform:
   m_GameObject: {fileID: 473241413}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 351.9, y: -33.2, z: -10}
+  m_LocalPosition: {x: 251.48, y: -36.19, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -12857,11 +12857,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4136269183892285952, guid: a6ff9fd50f525dd44b17ca59f9a03d32, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 351.9
+      value: 251.48
       objectReference: {fileID: 0}
     - target: {fileID: 4136269183892285952, guid: a6ff9fd50f525dd44b17ca59f9a03d32, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -33.2
+      value: -36.19
       objectReference: {fileID: 0}
     - target: {fileID: 4136269183892285952, guid: a6ff9fd50f525dd44b17ca59f9a03d32, type: 3}
       propertyPath: m_LocalPosition.z
@@ -16229,7 +16229,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 4.8
+  orthographic size: 7.41
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -16254,7 +16254,7 @@ Transform:
   m_GameObject: {fileID: 1881619400}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 351.9, y: -33.2, z: -10}
+  m_LocalPosition: {x: 251.48, y: -36.19, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -18395,6 +18395,14 @@ PrefabInstance:
     - target: {fileID: 3371421435697870398, guid: 14b2dab561160334995ff5d07138a7b7, type: 3}
       propertyPath: m_TagString
       value: Enemies
+      objectReference: {fileID: 0}
+    - target: {fileID: 8939699120829509638, guid: 14b2dab561160334995ff5d07138a7b7, type: 3}
+      propertyPath: m_FlipX
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8939699120829509638, guid: 14b2dab561160334995ff5d07138a7b7, type: 3}
+      propertyPath: m_FlipY
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8964197518719431717, guid: 14b2dab561160334995ff5d07138a7b7, type: 3}
       propertyPath: m_LocalPosition.x

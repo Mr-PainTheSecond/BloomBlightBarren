@@ -3,7 +3,7 @@ using System.Collections;
 
 public class LennyChangeSprite : MonoBehaviour
 {
-    private SpriteRenderer sprite;
+    public SpriteRenderer sprite;
 
     public Sprite idle,
         walk1,

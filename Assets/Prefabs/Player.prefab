@@ -697,6 +697,12 @@ MonoBehaviour:
   direction: 0
   facingDirection: 0
   fireTimers: []
+  lcSprite: {fileID: 0}
+  walkList:
+  - {fileID: 297533025410829449, guid: 5df4df847040548488c44aea6a057611, type: 3}
+  - {fileID: -4718405857998035576, guid: 5df4df847040548488c44aea6a057611, type: 3}
+  Climbing: []
+  spriteCd: 1
 --- !u!61 &6271147391542991129
 BoxCollider2D:
   m_ObjectHideFlags: 0

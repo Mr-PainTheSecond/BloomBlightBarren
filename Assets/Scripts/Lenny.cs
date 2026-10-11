@@ -26,6 +26,15 @@ public enum FireStages
     DRAWING_FIRE
 }
 
+public enum CYCLE_SPRITES
+{
+    NA,
+    WALK1,
+    WALK2,
+    CLIMB1,
+    CLIMB2  
+}
+
 public class Lenny : MonoBehaviour
 {
 
@@ -52,6 +61,7 @@ public class Lenny : MonoBehaviour
     public Vector2 lastGroundPosition;
     public GameObject fireObj;
     private GameObject activeFire;
+    private CYCLE_SPRITES cycleSp = CYCLE_SPRITES.NA;
 
     private Dictionary<Collider2D, Vector2> lastNormals;
 
@@ -71,6 +81,9 @@ public class Lenny : MonoBehaviour
     public float[] fireTimers;
 
     public LennyChangeSprite lcSprite;
+
+    public float changeSprite = 0.1f;
+    public float spriteTimer = 0;
     
     public int spriteCd = 1;
 
@@ -126,22 +139,17 @@ public class Lenny : MonoBehaviour
             Debug.Log($"{isHittingWall}");
             climbingMode = true;
 
-            if (spriteCd == 1)
-            {
-                lcSprite.ChangeSprite(lcSprite.climb1);
-                spriteCd++;
-            }
-            
-            if (spriteCd == 2)
-            {
-                lcSprite.ChangeSprite(lcSprite.climb2);
-                spriteCd--;
-            }
+            lcSprite.ChangeSprite(lcSprite.climb1);
+            cycleSp = CYCLE_SPRITES.CLIMB1;
+
         }
 
         else if (Input.GetKeyUp(KeyCode.LeftShift))
         {
             climbingMode = false;
+            lcSprite.ReturnSprite();
+            spriteTimer = 0;
+            cycleSp = CYCLE_SPRITES.NA;
         }
 
         float ySpeed = Input.GetAxisRaw("Vertical") * climbingSpeed * Time.deltaTime;
@@ -155,10 +163,15 @@ public class Lenny : MonoBehaviour
             jumpCount = 0;
         }
 
-        lcSprite.ReturnSprite();
         // If u are holding down the climb button, hitting a wall, haven't run out of a stamina, and trying to climb
         if (canClimb())
         {
+            if (cycleSp != CYCLE_SPRITES.CLIMB1 && cycleSp != CYCLE_SPRITES.CLIMB2)
+            {
+                lcSprite.ChangeSprite(lcSprite.climb1);
+                cycleSp = CYCLE_SPRITES.CLIMB1;
+            }
+
             Debug.Log("Trying to climb...");
 
             if (ySpeed == 0)
@@ -175,14 +188,24 @@ public class Lenny : MonoBehaviour
             return true;
         } else
         {
+
+            if (cycleSp == CYCLE_SPRITES.CLIMB1 || cycleSp == CYCLE_SPRITES.CLIMB2)
+            {
+                lcSprite.ChangeSprite(lcSprite.climb1);
+                cycleSp = CYCLE_SPRITES.CLIMB1;
+            }
+
             return false;
         }
+
     }
 
     public bool canClimb()
     {
         return climbingMode && isHittingWall && (climbingTimer < maxClimbingTime);
     }
+
+ 
 
     void handleMovement(float xSpeed)
     {
@@ -269,14 +292,19 @@ public class Lenny : MonoBehaviour
             canJump = true;
         }
 
-        if (xSpeed != 0)
+        if (xSpeed != 0 && isGrounded && !canClimb())
         {
-            lcSprite.ChangeSprite(lcSprite.walk1);
-            lcSprite.CycleSprites(lcSprite.walk1, lcSprite.walk2);
+            if (cycleSp != CYCLE_SPRITES.WALK1 && cycleSp != CYCLE_SPRITES.WALK2)
+            {
+                lcSprite.ChangeSprite(lcSprite.walk1);
+                cycleSp = CYCLE_SPRITES.WALK1;
+            }
         }
-        else if (xSpeed == 0 && !canJump && jumpCount < 2)
+        if (xSpeed == 0 && isGrounded)
         {
             lcSprite.ReturnSprite();
+            spriteTimer = 0;
+            cycleSp = CYCLE_SPRITES.NA;
             lcSprite.cycle = false;
         }
             
@@ -328,6 +356,8 @@ public class Lenny : MonoBehaviour
         if (collision.gameObject.transform.rotation.z < 90 && collision.gameObject.tag == "Ground")
         {
             lcSprite.ReturnSprite();
+            spriteTimer = 0;
+            cycleSp = CYCLE_SPRITES.NA;
             rb.linearVelocityY = 0;
             isGrounded = true;
             Debug.Log("Hit ground");
@@ -420,6 +450,8 @@ public class Lenny : MonoBehaviour
                 activeColliders = null;
                 attackTimer = 0;
                 lcSprite.ReturnSprite();
+                spriteTimer = 0;
+                cycleSp = CYCLE_SPRITES.NA;
             }
         }
 
@@ -472,6 +504,8 @@ public class Lenny : MonoBehaviour
                 fireStage = FireStages.REGULAR;
                 
                 lcSprite.ReturnSprite();
+                spriteTimer = 0;
+                cycleSp = CYCLE_SPRITES.NA;
             }
         }
 
@@ -536,6 +570,7 @@ public class Lenny : MonoBehaviour
 
         handleAttacks();
 
+
         if (facingDirection == Direction.LEFT)
         {
             this.transform.rotation = new Quaternion(0, -1, 0, 0);
@@ -543,6 +578,39 @@ public class Lenny : MonoBehaviour
         else
         {
             this.transform.rotation = new Quaternion(0, 0, 0, 0);
+        }
+
+
+
+
+        if (cycleSp != CYCLE_SPRITES.NA)
+        {
+            spriteTimer += Time.deltaTime;
+
+            if (spriteTimer > changeSprite)
+            {
+                Debug.Log("Changing Sprite!");
+                spriteTimer = 0;
+                switch (cycleSp)
+                {
+                    case CYCLE_SPRITES.WALK1:
+                        cycleSp = CYCLE_SPRITES.WALK2;
+                        lcSprite.ChangeSprite(lcSprite.walk2);
+                        break;
+                    case CYCLE_SPRITES.WALK2:
+                        cycleSp = CYCLE_SPRITES.WALK1;
+                        lcSprite.ChangeSprite(lcSprite.walk1);
+                        break;
+                    case CYCLE_SPRITES.CLIMB1:
+                        cycleSp = CYCLE_SPRITES.CLIMB2;
+                        lcSprite.ChangeSprite(lcSprite.climb2);
+                        break;
+                    case CYCLE_SPRITES.CLIMB2:
+                        cycleSp = CYCLE_SPRITES.CLIMB1;
+                        lcSprite.ChangeSprite(lcSprite.climb1);
+                        break;
+                }
+            }
         }
     }
 }

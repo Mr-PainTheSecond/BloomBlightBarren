@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 6556230699251179793}
   - component: {fileID: 3236108843095354226}
   - component: {fileID: 6271147391542991129}
-  - component: {fileID: 6964789312494908534}
   - component: {fileID: 8528231233762677328}
   - component: {fileID: 1090686308537852357}
   m_Layer: 0
@@ -193,7 +192,7 @@ MonoBehaviour:
   glidingWait: 0.75
   lastGroundPosition: {x: 0, y: 0}
   fireObj: {fileID: 8946191938687994836, guid: 8e334533d0560b94593308f7cc3d9c2d, type: 3}
-  leftAttack: {fileID: 6964789312494908534}
+  leftAttack: {fileID: 6556230699251179793}
   rightAttack: {fileID: 6556230699251179793}
   upAttack: {fileID: 8528231233762677328}
   downAttack: {fileID: 1090686308537852357}
@@ -249,52 +248,6 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   m_Size: {x: 2.5, y: 3.37}
-  m_EdgeRadius: 0
---- !u!61 &6964789312494908534
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7920501344159105874}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: -1.1538332, y: -0.2851345}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.5, y: 3.37}
-    newSize: {x: 2.5, y: 3.37}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 1.2726417, y: 0.509958}
   m_EdgeRadius: 0
 --- !u!61 &8528231233762677328
 BoxCollider2D:

@@ -368,7 +368,7 @@ public class Lenny : MonoBehaviour
 
             if ((attackingDirection != Direction.DOWN || canDownAttack()) && activeColliders == null)
             {
-                
+                Debug.Log(attackingDirection);
                 attacks[(int)attackingDirection].enabled = true;
                 activeColliders = attacks[(int)attackingDirection];
                 Debug.Log("Enabling attack!");

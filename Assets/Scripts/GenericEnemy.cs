@@ -12,11 +12,10 @@ public class GenericEnemy : MonoBehaviour
     private int fireDamage = 3;
     public SpawnEnemy spawn;
 
-
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        spawn = GetComponent<SpawnEnemy>();
+        //spawn = GetComponent<SpawnEnemy>();
         rb = GetComponent<Rigidbody2D>();
         rb.freezeRotation = true;
     }
@@ -42,8 +41,8 @@ public class GenericEnemy : MonoBehaviour
         
         if (HP <= 0)
         {
+            spawn.enemiesKilled++;
             Destroy(gameObject);
-            spawn.enemyCnt--;
         }
 
     }

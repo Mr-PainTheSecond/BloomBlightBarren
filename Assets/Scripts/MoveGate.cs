@@ -16,11 +16,11 @@ public class MoveGate : MonoBehaviour
 
     private void Update()
     {
-        if (spawnEnemy.enemyCnt == 0 && Lgate && Rgate)
+        if (spawnEnemy.waveComplete)
         {
             spawnEnemy.isSpawn = false;
-            Lgate.SetActive(false);
-            Rgate.SetActive(false);
+            if(Lgate) Lgate.SetActive(false);
+            if(Rgate) Rgate.SetActive(false);
         }
     }
 
